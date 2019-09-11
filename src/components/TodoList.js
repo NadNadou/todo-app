@@ -1,6 +1,5 @@
 import React,{Component} from "react";
 
-
 class TodoList extends Component {
     constructor() {
         super()
@@ -28,7 +27,7 @@ class TodoList extends Component {
             });
     }
 
-    deleteTodo(item){
+    deleteTodo(item){ 
          // no event 
         // pass the item to indexOf
         const array = this.state.items;//création d'une nouvelle variable
@@ -40,7 +39,7 @@ class TodoList extends Component {
 
     }
 
-    renderTodos(){
+    renderTodos(){//création d'une liste déroulante
         return this.state.items.map(item => {
             return(
                 <div className="list-group-item" key={item}>
