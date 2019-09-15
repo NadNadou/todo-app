@@ -1,9 +1,17 @@
 body {
   background-color: whitesmoke;
 }
+.card {
+  /* background-color: pink; */
+  width: 68rem;
 
+}
+
+.button-content{
+  margin-top: 60px;
+}
 .todo-list {
-  background-color: white;
+  background-color: pink;
   margin: auto;
   width: 50%;
   display: flex;
