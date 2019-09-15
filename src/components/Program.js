@@ -43,8 +43,6 @@ class Program extends Component {
         
         return (
             <div>
-              
-                <h1 align="center">Learn Program</h1>
                 <form className="form-hor">
                     <input
                         type="text"

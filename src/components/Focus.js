@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Focus.css';
 import TodoList from '../components/TodoList';
 import Program from '../components/Program';
 
@@ -12,8 +13,9 @@ class Focus extends Component {
             hEnd: 0,
             minEnd: 0,
             hTotal: 0,
-            focusTarget: 0,
-            hFocus: 0, //conversion de 25 min en heure (produit en croix)
+            inputTraining:'test',// nom du programme à apprendre
+            focusTarget: 0,//objectif de concentration
+            hFocus: 0, //conversion de 25 min en heure (produit en croix),
 
             hours:[
                 {id: 0,label:'00'},
@@ -56,13 +58,20 @@ class Focus extends Component {
                 {id: 11,label:'55'},
                 ],
         };
-
+        this.onChangeLearning = this.onChangeLearning.bind(this);
         this.changeHourStart = this.changeHourStart.bind(this);
         this.changeMinStart = this.changeMinStart.bind(this);
         this.changeHourEnd = this.changeHourEnd.bind(this);
         this.changeMinEnd = this.changeMinEnd.bind(this);
         this.focusTime = this.focusTime.bind(this);
         this.changeFocus = this.changeFocus.bind(this);
+    }
+
+    onChangeLearning(e){
+        e.preventDefault();
+        this.state = {
+            inputTraining:e.target.value,
+        }
     }
 
     changeHourStart(e) {
@@ -111,82 +120,91 @@ class Focus extends Component {
 
     render() {
         var inputFields = [];
-
         for (var i = 0; i < this.state.hTotal; i++) {
-
             inputFields.push(
                 <ul key={i}>
-                   
                     <input 
                         key={i} 
-                        placeholder="Tâches"
+                        placeholder={this.state.inputTraining}
                         className="list-group"
-                        >
-
-                    </input>
-    
+                     />
                 </ul>
             )
         }
 
-           //liste déroulante heures
-           const hoursList =this.state.hours.map((hour,i)=>{
-            return(
-                <option key={hour.id} value={hour.label}>{hour.label} </option>
-            )}
-            );
+        //liste déroulante heures
+        const hoursList =this.state.hours.map((hour,i)=>{
+        return(
+            <option key={hour.id} value={hour.label}>{hour.label} </option>
+        )}
+        );
 
-            //liste déroulante minutess
-            const minsList =this.state.mins.map((min,i)=>{
-            return(
-                <option key={min.id} value={min.label}>{min.label} </option>
-            )}
-            );
+        //liste déroulante minutess
+        const minsList =this.state.mins.map((min,i)=>{
+        return(
+            <option key={min.id} value={min.label}>{min.label} </option>
+        )}
+        );
 
         return (
             <div>
-                <form>
 
-                    <h2>Heure de début</h2>
-                    <select onChange={this.changeHourStart}>
-                        {hoursList}
-                    </select>
-                    h
-                    <select onChange={this.changeMinStart}>
-                        {minsList}
-                    </select>
+                <div className="card" >
+                    <div className="card-body">
+                        <h1 className="card-title text-center">Learning Program</h1>
+                        <h6 className="card-subtitle mb-2 text-muted text-center">Goal : schedule work</h6>
 
-                    <h2>Heure de fin</h2>
+                        <form className="form-group row">
 
-                    <select onChange={this.changeHourEnd}>
-                        {hoursList}
-                    </select>
-                    h
-                    <select onChange={this.changeMinEnd}>
-                        {minsList}
-                    </select>
+                            <label className="col-sm-2 col-form-label">What do you want to learn ?</label>
+                            
+                            <div class="col-sm-10">
+                                <input
+                                    type="text"
+                                    placeholder="Thing to learn"
+                                    onChange={this.onChangeLearning}
+                                    className="form-control nb-2"
+                                />
+                            </div>
 
-                    <h2>Focus time</h2>
-                    <input
-                        type="number"
-                        placeholder="focus"
-                        onChange={this.changeFocus}
-                    ></input> 
+                            <label className="col-sm-2 col-form-label">Availibity ?</label>
+                            
+                            <div class="col-sm-10">
+                                <label className="col-sm-2 col-form-label">Start :</label>
+                                <select onChange={this.changeHourStart}> {hoursList} </select>
+                                h
+                                <select onChange={this.changeMinStart} > {minsList} </select>
 
-                    <button
-                        onClick={this.focusTime}
-                        className="btn btn-primary"
 
-                    >Focus ME</button>
-                </form>
+                                <label className="col-sm-2 col-form-label">End :</label>
+                                <select onChange={this.changeHourEnd}> {hoursList} </select>
+                                h
+                                <select onChange={this.changeMinEnd} > {minsList} </select>
 
-                <div>Périodes de concentration :
+                            </div>
+
+                            <label className="col-sm-2 col-form-label">Focus time ?</label>
+
+                            <div class="col-sm-10">
+                                <input type="number" placeholder="focus" onChange={this.changeFocus}></input> 
+                            </div>
+                            <div class="col-sm-10 text-center button-content">
+                                <button onClick={this.focusTime} className="btn btn-primary" >Focus ME</button>
+                            </div>
+                            
+                        </form>
+
+                        <div>{inputFields}</div>
+        
+                    </div>
+                </div>
+
+                {/* <div>Périodes de concentration :
                     {this.state.hTotal} périodes de concentration de {this.state.focusTarget} minutes.
         
-                </div>
-                <div>{inputFields}</div>
+                </div> */}
+            
 
-                <Program />
             </div>
 
         );
